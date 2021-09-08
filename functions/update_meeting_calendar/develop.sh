@@ -9,4 +9,3 @@ docker run -it --rm \
     -v "$(pwd)/../../etc:/usr/src/etc" \
     -w /usr/src \
     "${IMAGE}" python main.py
-

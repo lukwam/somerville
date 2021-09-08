@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
 """Cloud Function to update the Somerville Meeting Calendar in Google Calendar."""
-import dateparser
-import feedparser
-import json
 from datetime import datetime
 from datetime import timedelta
-from googleapiclient.discovery import build
-from pytz import timezone
 from time import mktime
 from urllib.parse import urlparse
+
+import dateparser
+import feedparser
+from googleapiclient.discovery import build
+from pytz import timezone
 
 
 CALENDAR_ID = "rfkur2e12ehe3kcd712b28kgpo@group.calendar.google.com"
@@ -19,10 +20,12 @@ def add_event(event):
     service = build('calendar', 'v3', cache_discovery=False)
     return service.events().insert(calendarId=CALENDAR_ID, body=event).execute()
 
+
 def delete_event(event_id):
     """Delete an event from Google Calendar."""
     service = build('calendar', 'v3', cache_discovery=False)
     return service.events().delete(calendarId=CALENDAR_ID, eventId=event_id).execute()
+
 
 def update_event(event_id, event):
     """Update an event from Google Calendar."""
@@ -95,6 +98,7 @@ def get_rss_entries():
         items.append(item)
     return items
 
+
 def get_rss_meetings(entries):
     """Return a dict of meetings from the RSS feed entries."""
     meetings = {}
@@ -128,7 +132,7 @@ def prepare_rss_events(meetings):
             "summary": meeting["name"],
             "description": description,
             "start": {"dateTime": start.isoformat()},
-            "end": {"dateTime": end.isoformat()}
+            "end": {"dateTime": end.isoformat()},
         }
         events[event_id] = event
     return events
@@ -140,7 +144,9 @@ def update_events(old_events, new_events):
     for eid, event in new_events.items():
         if eid not in old_events:
             added.append(eid)
-            print(f" + {event['start']['dateTime']}: {event['summary']} [{eid}]")
+            print(
+                f" + {event['start']['dateTime']}: {event['summary']} [{eid}]",
+            )
             add_event(event)
     print(f"Added: {len(added)}")
 
@@ -148,7 +154,9 @@ def update_events(old_events, new_events):
     for eid, event in old_events.items():
         if eid not in new_events:
             deleted.append(eid)
-            print(f" - {event['start']['dateTime']}: {event['summary']} [{eid}]")
+            print(
+                f" - {event['start']['dateTime']}: {event['summary']} [{eid}]",
+            )
             delete_event(eid)
     print(f"Deleted: {len(deleted)}")
 
@@ -189,9 +197,12 @@ def update_meeting_calendar(request):
     google_events = get_google_calendar_events_dict()
     print(f"Events: {len(google_events)}")
 
-    print(f"Updating events in Google calendar...")
+    print("Updating events in Google calendar...")
     update_events(google_events, rss_events)
-    print(f"Done.")
+    print("Done.")
+
+    return "ok"
+
 
 if __name__ == "__main__":
     update_meeting_calendar(None)

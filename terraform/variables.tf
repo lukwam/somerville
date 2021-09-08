@@ -10,3 +10,6 @@ variable "project_id" {
 variable "project_name" {
     default = "My Project"
 }
+variable "region" {
+    default = "us-east4"
+}
