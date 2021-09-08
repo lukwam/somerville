@@ -17,6 +17,7 @@ resource "google_project_service" "services" {
     "calendar-json.googleapis.com",
     "cloudbuild.googleapis.com",
     "cloudfunctions.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
     "cloudscheduler.googleapis.com",
   ])
   service                    = each.key
