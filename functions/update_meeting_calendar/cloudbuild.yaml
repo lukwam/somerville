@@ -1,0 +1,16 @@
+---
+steps:
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    dir: functions/update_meeting_calendar
+    entrypoint: gcloud
+    args:
+      - functions
+      - deploy
+      - update_meeting_calendar
+      - --memory=256MB
+      - --project=${PROJECT_ID}
+      - --region=us-east4
+      - --runtime=python39
+      - --timeout=300
+      - --trigger-http
+      - -q
