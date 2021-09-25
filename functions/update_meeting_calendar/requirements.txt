@@ -1,3 +1,4 @@
 dateparser==1.0.0
 feedparser==6.0.8
 google-api-python-client==2.19.1
+google-cloud-firestore==2.3.3
