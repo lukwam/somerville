@@ -204,7 +204,7 @@ def update_firestore_meetings(meetings):
     delete = []
     for meeting_id in current:
         if meeting_id not in meetings:
-            delete.append(meetings[meeting_id])
+            delete.append(current[meeting_id])
     print(f"Delete from Firestore: {len(delete)}")
 
     # add new meetings to firestore and "current"

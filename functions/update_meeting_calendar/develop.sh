@@ -4,8 +4,8 @@
 IMAGE="update_meeting_calendar"
 
 docker run -it --rm \
-    -e GOOGLE_APPLICATION_CREDENTIALS="/usr/src/etc/service_account.json" \
-    -v "$(pwd):/usr/src" \
-    -v "$(pwd)/../../etc:/usr/src/etc" \
-    -w /usr/src \
-    "${IMAGE}" python main.py
+    -e GOOGLE_APPLICATION_CREDENTIALS="/workspace/etc/service_account.json" \
+    -v "$(pwd):/workspace" \
+    -v "$(pwd)/../../etc:/workspace/etc" \
+    -w /workspace \
+    "${IMAGE}"

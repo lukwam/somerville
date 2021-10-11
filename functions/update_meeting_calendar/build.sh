@@ -2,4 +2,4 @@
 
 IMAGE="update_meeting_calendar"
 
-docker build -t "${IMAGE}" .
+pack build "${IMAGE}" --builder gcr.io/buildpacks/builder:v1
